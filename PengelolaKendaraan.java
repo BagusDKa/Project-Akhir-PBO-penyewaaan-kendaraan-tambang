@@ -5,10 +5,6 @@ import dao.KendaraanDAOImpl;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Model pengelola data. Tidak peduli DAO yang dipakai JDBC atau Hibernate
- * (polymorphism lewat interface KendaraanDAO).
- */
 public class PengelolaKendaraan {
 
     private KendaraanDAO dao;
@@ -52,7 +48,6 @@ public class PengelolaKendaraan {
         }
     }
 
-    // Overloading cari(...)
     public KendaraanTambang cari(String id) {
         try {
             return dao.getById(id);
@@ -74,7 +69,6 @@ public class PengelolaKendaraan {
         if (k == null) {
             return false;
         }
-        // validasi lewat setter (melempar IllegalArgumentException bila tidak valid)
         k.setNamaKendaraan(namaBaru);
         k.setHargaSewaPerHari(hargaBaru);
         k.setKapasitas(kapasitasBaru);
