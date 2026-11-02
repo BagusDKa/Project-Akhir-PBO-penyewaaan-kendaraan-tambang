@@ -9,7 +9,6 @@ import view.KendaraanView;
 public class Main {
 
     public static void main(String[] args) {
-        // Perulangan + percabangan: cari tema Nimbus agar tampilan lebih rapi
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -21,7 +20,6 @@ public class Main {
             // jika gagal, pakai tema bawaan
         }
 
-        // Semua komponen Swing dibuat di Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
             PengelolaKendaraan model = new PengelolaKendaraan();
             KendaraanView view = new KendaraanView();
