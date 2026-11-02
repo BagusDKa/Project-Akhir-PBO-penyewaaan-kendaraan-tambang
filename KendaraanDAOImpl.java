@@ -11,7 +11,6 @@ import model.Excavator;
 import model.KendaraanTambang;
 import util.KoneksiDB;
 
-/** DAO versi JDBC murni dengan PreparedStatement. */
 public class KendaraanDAOImpl implements KendaraanDAO {
 
     private static final String SELECT_DASAR =
