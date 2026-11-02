@@ -74,7 +74,6 @@ public abstract class KendaraanTambang {
         this.hargaSewaPerHari = hargaSewaPerHari;
     }
 
-    // ===== Method abstract (wajib di-override subclass) =====
     public abstract String getJenis();
 
     public abstract String getDetail();
@@ -85,12 +84,11 @@ public abstract class KendaraanTambang {
 
     public abstract double hitungBiayaSewa(int hari);
 
-    // ===== Overloading =====
     public double hitungBiayaSewa(int hari, double diskonPersen) {
         if (diskonPersen < 0 || diskonPersen > 100) {
             throw new IllegalArgumentException("Diskon harus antara 0 sampai 100.");
         }
-        double total = hitungBiayaSewa(hari); // dynamic dispatch (polymorphism)
+        double total = hitungBiayaSewa(hari); 
         return total - (total * diskonPersen / 100);
     }
 
