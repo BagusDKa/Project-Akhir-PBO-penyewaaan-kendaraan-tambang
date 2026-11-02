@@ -27,21 +27,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.KendaraanTambang;
 
-/**
- * VIEW: hanya mengurus tampilan (Java Swing).
- * Tidak ada logika bisnis / akses database di sini; semua aksi
- * diteruskan ke Controller lewat listener.
- */
 public class KendaraanView extends JFrame {
 
     public static final int JENIS_DUMP_TRUCK = 0;
     public static final int JENIS_EXCAVATOR = 1;
 
-    // ===== Sumber data =====
     private final JComboBox<String> cbSumberData =
             new JComboBox<>(new String[]{"Hibernate ORM", "JDBC (PreparedStatement)"});
 
-    // ===== Form data kendaraan =====
     private final JComboBox<String> cbJenis = new JComboBox<>(new String[]{"Dump Truck", "Excavator"});
     private final JTextField txtId = new JTextField(16);
     private final JTextField txtNama = new JTextField(16);
@@ -54,7 +47,6 @@ public class KendaraanView extends JFrame {
     private final JButton btnHapus = new JButton("Hapus");
     private final JButton btnBersihkan = new JButton("Bersihkan");
 
-    // ===== Tabel =====
     private final DefaultTableModel tableModel = new DefaultTableModel(
             new Object[]{"ID", "Jenis", "Nama Kendaraan", "Harga Sewa / Hari", "Detail"}, 0) {
         @Override
@@ -64,13 +56,11 @@ public class KendaraanView extends JFrame {
     };
     private final JTable tabel = new JTable(tableModel);
 
-    // ===== Hitung biaya sewa =====
     private final JTextField txtHari = new JTextField(8);
     private final JTextField txtDiskon = new JTextField("0", 8);
     private final JButton btnHitung = new JButton("Hitung Biaya");
     private final JLabel lblHasilBiaya = new JLabel("Total: -");
 
-    // ===== Cari berdasarkan harga =====
     private final JTextField txtHargaMin = new JTextField(10);
     private final JTextField txtHargaMax = new JTextField(10);
     private final JButton btnCari = new JButton("Cari");
@@ -90,7 +80,6 @@ public class KendaraanView extends JFrame {
         root.add(buatPanelBawah(), BorderLayout.SOUTH);
         setContentPane(root);
 
-        // Perilaku murni tampilan: label kapasitas menyesuaikan jenis
         cbJenis.addActionListener(e -> lblKapasitas.setText(
                 cbJenis.getSelectedIndex() == JENIS_DUMP_TRUCK
                         ? "Kapasitas (ton)" : "Kapasitas bucket (m3)"));
@@ -100,7 +89,6 @@ public class KendaraanView extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    // ================== Pembuatan panel ==================
 
     private JPanel buatPanelAtas() {
         JPanel panel = new JPanel(new BorderLayout());
@@ -212,7 +200,6 @@ public class KendaraanView extends JFrame {
         panel.add(kanan, gbc);
     }
 
-    // ================== Menampilkan data ==================
 
     public void tampilkanDaftar(List<KendaraanTambang> daftar) {
         tableModel.setRowCount(0);
@@ -278,7 +265,6 @@ public class KendaraanView extends JFrame {
         return jawab == JOptionPane.YES_OPTION;
     }
 
-    // ================== Getter input (dibaca Controller) ==================
 
     public int getJenisTerpilih() {
         return cbJenis.getSelectedIndex();
@@ -329,7 +315,6 @@ public class KendaraanView extends JFrame {
         return (String) tableModel.getValueAt(baris, 0);
     }
 
-    // ================== Pendaftaran listener (dipasang Controller) ==================
 
     public void addTambahListener(ActionListener l) {
         btnTambah.addActionListener(l);
