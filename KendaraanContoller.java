@@ -13,10 +13,6 @@ import util.HibernateUtil;
 import util.InputValidator;
 import view.KendaraanView;
 
-/**
- * CONTROLLER: menerima event dari View, memvalidasi input (Scanner),
- * memanggil Model, lalu memperbarui View.
- */
 public class KendaraanController {
 
     private static final int SUMBER_HIBERNATE = 0;
@@ -33,7 +29,7 @@ public class KendaraanController {
 
     public void jalankan() {
         view.setVisible(true);
-        gantiSumberData(); // pakai pilihan awal combo (Hibernate ORM) lalu muat data
+        gantiSumberData(); 
     }
 
     private void daftarkanListener() {
@@ -58,7 +54,6 @@ public class KendaraanController {
         });
     }
 
-    /** Penanganan error terpusat: input salah -> peringatan, error lain -> pesan kesalahan. */
     private void jalankanAksi(Runnable aksi) {
         try {
             aksi.run();
@@ -83,7 +78,6 @@ public class KendaraanController {
             }
             view.tampilkanDaftar(model.getSemuaKendaraan());
         });
-        // menampilkan sumber yang benar-benar aktif (tetap JDBC bila Hibernate gagal disiapkan)
         view.setStatus("Sumber data aktif: " + model.getNamaSumberData());
     }
 
@@ -115,7 +109,7 @@ public class KendaraanController {
             String nama = InputValidator.bacaStringTidakKosong(view.getInputNama(), "Nama Kendaraan");
             double harga = InputValidator.bacaDoublePositif(view.getInputHarga(), "Harga sewa/hari");
 
-            KendaraanTambang kendaraan; // tipe induk, objek anak (polymorphism)
+            KendaraanTambang kendaraan; 
             if (jenis == KendaraanView.JENIS_DUMP_TRUCK) {
                 double kapasitas = InputValidator.bacaDoublePositif(view.getInputKapasitas(), "Kapasitas (ton)");
                 kendaraan = new DumpTruck(id, nama, harga, kapasitas);
@@ -186,7 +180,7 @@ public class KendaraanController {
                 view.tampilkanPeringatan("Pilih kendaraan pada tabel terlebih dahulu.");
                 return;
             }
-            KendaraanTambang k = model.cari(id); // overloading cari(String)
+            KendaraanTambang k = model.cari(id);
             if (k == null) {
                 view.tampilkanPeringatan("Data dengan ID tersebut tidak ditemukan.");
                 return;
@@ -196,9 +190,9 @@ public class KendaraanController {
 
             double total;
             if (diskon == 0) {
-                total = k.hitungBiayaSewa(hari);          // overriding per jenis
+                total = k.hitungBiayaSewa(hari);          
             } else {
-                total = k.hitungBiayaSewa(hari, diskon);  // overloading
+                total = k.hitungBiayaSewa(hari, diskon);  
             }
             view.tampilkanHasilBiaya(total);
             view.setStatus(String.format("%s (%s) disewa %d hari, diskon %d%% -> Rp %,.2f",
@@ -214,7 +208,7 @@ public class KendaraanController {
                 view.tampilkanPeringatan("Harga minimum tidak boleh lebih besar dari maksimum.");
                 return;
             }
-            List<KendaraanTambang> hasil = model.cari(min, max); // overloading cari(double, double)
+            List<KendaraanTambang> hasil = model.cari(min, max); 
             view.tampilkanDaftar(hasil);
             if (hasil.isEmpty()) {
                 view.tampilkanInfo("Tidak ada kendaraan pada rentang harga tersebut.");
