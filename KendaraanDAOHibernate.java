@@ -8,10 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 
-/**
- * DAO versi ORM (Hibernate). Tidak ada SQL manual:
- * objek langsung disimpan/diambil, query memakai HQL berbasis nama class & atribut.
- */
 public class KendaraanDAOHibernate implements KendaraanDAO {
 
     private final SessionFactory sessionFactory;
